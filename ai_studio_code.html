@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AL Digital Services | Premium Web Solutions</title>
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            /* Light Mode (Nike Style: Stark White/Black) */
+            --bg-color: #ffffff;
+            --text-color: #111111;
+            --secondary-text: #707072;
+            --card-bg: #f5f5f5;
+            --accent-color: #111111; /* Black button */
+            --accent-text: #ffffff;
+            --border-color: #e5e5e5;
+            --toggle-bg: #e5e5e5;
+            --nav-height: 60px;
+        }
+
+        [data-theme="dark"] {
+            /* Dark Mode (Modern Charcoal/Black) */
+            --bg-color: #111111;
+            --text-color: #ffffff;
+            --secondary-text: #cacaca;
+            --card-bg: #1e1e1e;
+            --accent-color: #ffffff; /* White button */
+            --accent-text: #000000;
+            --border-color: #333333;
+            --toggle-bg: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                        color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        border-color 0.4s ease;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Nike uses generic sans-serifs effectively */
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: var(--nav-height);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 4%;
+            background-color: var(--bg-color);
+            z-index: 1000;
+            border-bottom: 1px solid transparent;
+        }
+
+        header.scrolled {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            font-weight: 900;
+            font-size: 1.5rem;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+            font-style: italic; /* Slight nod to motion */
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* --- THEME SWITCH --- */
+        .theme-switch-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        .theme-switch {
+            display: inline-block;
+            height: 24px;
+            position: relative;
+            width: 48px;
+        }
+
+        .theme-switch input {
+            display: none;
+        }
+
+        .slider {
+            background-color: var(--toggle-bg);
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            background-color: var(--text-color);
+            bottom: 4px;
+            content: "";
+            height: 16px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+            width: 16px;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 6rem; /* Big, bold Nike style */
+            font-weight: 900;
+            line-height: 0.9;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--secondary-text);
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            background-color: var(--accent-color);
+            color: var(--accent-text);
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: transform 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        /* --- SERVICES (Grid) --- */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 0 4%;
+            margin-bottom: 30px;
+        }
+
+        .services {
+            padding: 50px 4%;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 40px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-weight: 800;
+        }
+
+        .card p {
+            color: var(--secondary-text);
+        }
+
+        /* --- PRICING --- */
+        .pricing {
+            padding: 80px 4%;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .price-card {
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            border-radius: 0; /* Nike uses sharp corners often */
+            text-align: left;
+        }
+
+        .price-card h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 30px;
+            color: var(--secondary-text);
+        }
+
+        .features-list li {
+            margin-bottom: 10px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 40px 4%;
+            background-color: var(--bg-color);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        footer p {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3.5rem; }
+            nav { display: none; } /* Simplified for demo */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="logo">AL Digital</div>
+        <nav>
+            <ul>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="theme-switch-wrapper">
+            <label class="theme-switch" for="checkbox">
+                <input type="checkbox" id="checkbox" />
+                <div class="slider"></div>
+            </label>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Just<br>Code It.</h1>
+        <p>Premium Freelance & Modern Web Development Services. We build the digital future, one pixel at a time.</p>
+        <a href="#pricing" class="btn">View Plans</a>
+    </section>
+
+    <!-- Services Section -->
+    <div class="section-title">Latest Drops (Services)</div>
+    <section class="services" id="services">
+        <div class="grid-container">
+            <div class="card">
+                <h3>Custom<br>Web Dev</h3>
+                <p>High-performance websites built with React, Vue, or Next.js.</p>
+            </div>
+            <div class="card">
+                <h3>UI/UX<br>Design</h3>
+                <p>Interfaces that feel as good as a fresh pair of Air Jordans.</p>
+            </div>
+            <div class="card">
+                <h3>Freelance<br>Strategy</h3>
+                <p>Consulting to take your personal brand to the big leagues.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <div class="section-title">Pricing Collection</div>
+    <section class="pricing" id="pricing">
+        <div class="pricing-grid">
+            <!-- Basic -->
+            <div class="price-card">
+                <h4>Starter</h4>
+                <span class="price">$500</span>
+                <ul class="features-list">
+                    <li>One Page Site</li>
+                    <li>Mobile Responsive</li>
+                    <li>Basic SEO</li>
+                    <li>1 Revision</li>
+                </ul>
+                <a href="#" class="btn" style="width:100%; display:block; text-align:center;">Select</a>
+            </div>
+            
+            <!-- Pro -->
+            <div class="price-card" style="border-color: var(--text-color);">
+                <h4>Pro (Bestseller)</h4>
+                <span class="price">$1200</span>
+                <ul class="features-list">
+                    <li>5 Page Website</li>
+                    <li>CMS Integration</li>
+                    <li>Advanced Animations</li>
+                    <li>5 Revisions</li>
+                </ul>
+                <a href="#" class="btn" style="width:100%; display:block; text-align:center;">Select</a>
+            </div>
+
+            <!-- Enterprise -->
+            <div class="price-card">
+                <h4>Enterprise</h4>
+                <span class="price">Custom</span>
+                <ul class="features-list">
+                    <li>Full E-Commerce</li>
+                    <li>Custom Backend</li>
+                    <li>24/7 Support</li>
+                    <li>Unlimited Revisions</li>
+                </ul>
+                <a href="#" class="btn" style="width:100%; display:block; text-align:center;">Contact</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="logo">AL Digital</div>
+        <p>&copy; 2023 AL Digital Services. All Rights Reserved.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Toggle Switch Logic
+        const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+        const currentTheme = localStorage.getItem('theme');
+
+        // Check for saved user preference
+        if (currentTheme) {
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            if (currentTheme === 'dark') {
+                toggleSwitch.checked = true;
+            }
+        }
+
+        // Function to switch theme
+        function switchTheme(e) {
+            if (e.target.checked) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        toggleSwitch.addEventListener('change', switchTheme, false);
+
+        // Header Scroll Effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
